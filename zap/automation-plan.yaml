@@ -1,0 +1,123 @@
+# ---------------------------------------------------------------------------
+# OWASP ZAP Automation Framework plan — scoped SQLi + XSS active scan.
+#
+# This is the declarative equivalent of driving the ZAP desktop by hand. It is
+# deliberately scoped to the single authorized lab host via the `context` URL
+# include-regex, so ZAP's spider and active scanner physically cannot leave it.
+#
+# Run it headless with the zaproxy Docker image (see scripts/run_zap.sh):
+#   docker run --rm -v "$PWD/zap:/zap/wrk:rw" -v "$PWD/evidence/zap:/zap/out:rw" \
+#     ghcr.io/zaproxy/zaproxy:stable zap.sh -cmd -autorun /zap/wrk/automation-plan.yaml
+#
+# Reference: https://www.zaproxy.org/docs/automate/automation-framework/
+# ---------------------------------------------------------------------------
+env:
+  contexts:
+    - name: "vulnweb-lab"
+      urls:
+        - "http://testaspnet.vulnweb.com"
+      includePaths:
+        # Only this host is in scope. Everything else is excluded.
+        - "http://testaspnet.vulnweb.com.*"
+      excludePaths:
+        - ".*logout.*"
+        - ".*signout.*"
+  parameters:
+    failOnError: true
+    failOnWarning: false
+    progressToStdout: true
+
+jobs:
+  # 1. Classic spider to enumerate links/forms (entry-point discovery).
+  - type: spider
+    name: "spider"
+    parameters:
+      context: "vulnweb-lab"
+      url: "http://testaspnet.vulnweb.com/"
+      maxDuration: 3          # minutes — keep the lab run short
+      maxDepth: 5
+    tests:
+      - name: "at-least-some-urls-found"
+        type: stats
+        statistic: "automation.spider.urls.added"
+        operator: ">="
+        value: 5
+        onFail: "warn"
+
+  # 2. AJAX spider for any JS-rendered links the classic spider misses.
+  - type: spiderAjax
+    name: "spiderAjax"
+    parameters:
+      context: "vulnweb-lab"
+      url: "http://testaspnet.vulnweb.com/"
+      maxDuration: 2
+      browserId: "firefox-headless"
+
+  # 3. Passive scan sweep of everything seen so far.
+  - type: passiveScan-wait
+    name: "passiveScan-wait"
+    parameters:
+      maxDuration: 3
+
+  # 4. Active scan, focused on the two relevant vulnerability classes.
+  #    Policy restricts plugins to the SQLi and XSS families so the scan is
+  #    targeted and fast (mirrors the assignment's scope).
+  - type: activeScan
+    name: "activeScan"
+    parameters:
+      context: "vulnweb-lab"
+      maxRuleDurationInMins: 3
+      maxScanDurationInMins: 10
+    policyDefinition:
+      defaultStrength: "medium"
+      defaultThreshold: "off"      # start everything off...
+      rules:
+        # ...then enable only the SQLi + XSS rule families.
+        - id: 40018            # SQL Injection
+          name: "SQL Injection"
+          strength: "medium"
+          threshold: "low"
+        - id: 40019            # SQL Injection - MySQL
+          strength: "medium"
+          threshold: "low"
+        - id: 40020            # SQL Injection - Hypersonic
+          strength: "medium"
+          threshold: "low"
+        - id: 40021            # SQL Injection - Oracle
+          strength: "medium"
+          threshold: "low"
+        - id: 40022            # SQL Injection - PostgreSQL
+          strength: "medium"
+          threshold: "low"
+        - id: 40027            # SQL Injection - MsSQL
+          strength: "medium"
+          threshold: "low"
+        - id: 40012            # Cross Site Scripting (Reflected)
+          name: "XSS (Reflected)"
+          strength: "medium"
+          threshold: "low"
+        - id: 40014            # Cross Site Scripting (Persistent)
+          name: "XSS (Persistent)"
+          strength: "medium"
+          threshold: "low"
+        - id: 40016            # XSS (Persistent) - Prime
+          strength: "medium"
+          threshold: "low"
+        - id: 40017            # XSS (Persistent) - Spider
+          strength: "medium"
+          threshold: "low"
+
+  # 5. Reports — both human (HTML) and machine (JSON) forms into evidence/zap.
+  - type: report
+    name: "report-html"
+    parameters:
+      template: "traditional-html"
+      reportDir: "/zap/out"
+      reportFile: "zap-report"
+      reportTitle: "ZAP Scan — testaspnet.vulnweb.com (SQLi/XSS lab)"
+  - type: report
+    name: "report-json"
+    parameters:
+      template: "traditional-json"
+      reportDir: "/zap/out"
+      reportFile: "zap-report"

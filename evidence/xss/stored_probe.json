@@ -1,0 +1,14 @@
+{
+  "generated_at": "2026-11-23T20:02:13.313098+00:00",
+  "target": "http://testaspnet.vulnweb.com/Comments.aspx?id=1",
+  "field": "tbComment",
+  "method": "POST",
+  "canary": "<zzxssa50ca9c4zz>",
+  "post_status": 200,
+  "stored_unencoded": true,
+  "stored_encoded": true,
+  "verdict": "STORED XSS (comment persisted and rendered UNENCODED)",
+  "confidence": "high",
+  "context_snippet": "[redacted-ip]</strong>11/23/2026 8:02:09 PM</DIV><DIV class=\"CommentText\"><zzxssa50ca9c4zz></DIV></td>\r\n\t</tr>\r\n\t<t",
+  "note": "Non-executing canary used deliberately. A real payload such as <script>alert(document.cookie)</script> or <img src=x onerror=alert(1)> would execute in every visitor's browser."
+}

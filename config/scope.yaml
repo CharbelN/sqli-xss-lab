@@ -1,0 +1,99 @@
+# ---------------------------------------------------------------------------
+# scope.yaml  --  Single source of truth for the engagement.
+#
+# Every script in this repo (crawler, probes, the Phase-3 agent runner) loads
+# this file through scripts/guardrails.py BEFORE touching the network. If a
+# target is not described here, the tooling refuses to run. This is what keeps
+# an automated agent from wandering off the authorized lab host.
+#
+# Assignment rule being encoded: "Keep all testing within the assigned lab
+# application" and "sqlmap uses a risk and intensity level of 2 or 3, not 5".
+# ---------------------------------------------------------------------------
+
+engagement:
+  name: "SQL Injection & XSS Lab — testaspnet.vulnweb.com"
+  # Acunetix publishes vulnweb.com explicitly as a legal target for testing
+  # tools and training. See docs/00-rules-of-engagement.md for the citation.
+  authorization: "Public intentionally-vulnerable training target (Acunetix vulnweb). Coursework lab."
+  operator: "CharbelN"
+
+# --- Network scope -----------------------------------------------------------
+scope:
+  # Only these hosts may be contacted. Enforced by hostname match (exact).
+  allowed_hosts:
+    - "testaspnet.vulnweb.com"
+  allowed_schemes:
+    - "http"      # the lab app is plain HTTP
+    - "https"
+  # Seed URLs the crawler and scanners start from.
+  seeds:
+    - "http://testaspnet.vulnweb.com/"
+    - "http://testaspnet.vulnweb.com/Comments.aspx?id=1"
+  # Paths the tooling must never touch even though they are on the allowed host.
+  # (Defensive: this lab has none that are sensitive, but the hook exists so the
+  #  same config shape is safe to reuse on a real engagement.)
+  deny_paths:
+    - "/logout"
+    - "/signout"
+
+# --- sqlmap guardrails -------------------------------------------------------
+# These are HARD CAPS. guardrails.py clamps/――rejects anything outside them.
+sqlmap:
+  # Assignment: risk/level must be 2 or 3, never 5.
+  risk:
+    default: 2
+    min: 2
+    max: 3
+  level:
+    default: 2
+    min: 2
+    max: 3
+  # Keep the scan polite and non-destructive.
+  threads_max: 2
+  default_delay_seconds: 0        # vulnweb tolerates this; raise for real targets
+  time_sec: 5                     # time-based blind delay threshold
+  technique: "BEUSTQ"             # allow all detection techniques, no stacked-query abuse beyond detection
+  # Flags that must NEVER be passed to sqlmap. Any attempt is a hard failure.
+  forbidden_flags:
+    - "--os-shell"
+    - "--os-pwn"
+    - "--os-cmd"
+    - "--os-smbrelay"
+    - "--sql-shell"
+    - "--file-read"
+    - "--file-write"
+    - "--file-dest"
+    - "--reg-read"
+    - "--reg-add"
+    - "--reg-del"
+    - "--priv-esc"
+    - "--dump-all"
+    - "--all"
+    - "--eval"
+    - "--load-cookies"
+  # Enumeration that IS allowed for this lab (bounded proof of impact only).
+  allowed_enumeration:
+    - "--banner"
+    - "--current-db"
+    - "--current-user"
+    - "--is-dba"
+    - "--dbs"
+    - "--tables"
+
+# --- XSS probe settings ------------------------------------------------------
+xss:
+  # Non-executing marker payloads: we check for *reflection without encoding*.
+  # We deliberately use a harmless, uniquely-identifiable canary rather than a
+  # payload that would run in a victim browser.
+  canary_token: "zzXSS{rand}zz"
+  payloads:
+    - "<zzxsszz>"                       # tag-injection reflection probe
+    - "\"'><zzxsszz>"                   # attribute break-out probe
+    - "<img src=x onerror=zzxsszz>"     # event-handler probe (not auto-run here)
+
+# --- HTTP hygiene ------------------------------------------------------------
+http:
+  user_agent: "sqli-xss-lab/1.0 (authorized coursework scan; +https://github.com/CharbelN/sqli-xss-lab)"
+  timeout_seconds: 20
+  max_crawl_pages: 40
+  max_crawl_depth: 2

@@ -1,0 +1,546 @@
+{
+  "generated_at": "2026-11-23T19:07:42.464552+00:00",
+  "scope": [
+    "testaspnet.vulnweb.com"
+  ],
+  "stats": {
+    "pages_crawled": 16,
+    "url_parameters": 3,
+    "forms": 14
+  },
+  "pages": [
+    {
+      "url": "http://testaspnet.vulnweb.com/",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "depth": 0
+    },
+    {
+      "url": "http://testaspnet.vulnweb.com/Comments.aspx?id=1",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "depth": 0
+    },
+    {
+      "url": "http://testaspnet.vulnweb.com/about.aspx",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "depth": 1
+    },
+    {
+      "url": "http://testaspnet.vulnweb.com/default.aspx",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "depth": 1
+    },
+    {
+      "url": "http://testaspnet.vulnweb.com/login.aspx",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "depth": 1
+    },
+    {
+      "url": "http://testaspnet.vulnweb.com/Signup.aspx",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "depth": 1
+    },
+    {
+      "url": "http://testaspnet.vulnweb.com/rssFeed.aspx",
+      "status": 200,
+      "content_type": "text/xml; charset=utf-8",
+      "depth": 1
+    },
+    {
+      "url": "http://testaspnet.vulnweb.com/Comments.aspx?id=0",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "depth": 1
+    },
+    {
+      "url": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=0&NewsAd=ads/def.html",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "depth": 1
+    },
+    {
+      "url": "http://testaspnet.vulnweb.com/Comments.aspx?id=3",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "depth": 1
+    },
+    {
+      "url": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=3&NewsAd=ads/def.html",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "depth": 1
+    },
+    {
+      "url": "http://testaspnet.vulnweb.com/Comments.aspx?id=2",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "depth": 1
+    },
+    {
+      "url": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=2&NewsAd=ads/def.html",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "depth": 1
+    },
+    {
+      "url": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=0",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "depth": 2
+    },
+    {
+      "url": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=3",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "depth": 2
+    },
+    {
+      "url": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=2",
+      "error": "HTTPConnectionPool(host='testaspnet.vulnweb.com', port=80): Read timed out."
+    }
+  ],
+  "url_parameter_entrypoints": [
+    {
+      "type": "url-parameter",
+      "method": "GET",
+      "path": "/Comments.aspx",
+      "parameter": "id",
+      "example_url": "http://testaspnet.vulnweb.com/Comments.aspx?id=2",
+      "sample_value": "1"
+    },
+    {
+      "type": "url-parameter",
+      "method": "GET",
+      "path": "/ReadNews.aspx",
+      "parameter": "id",
+      "example_url": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=3",
+      "sample_value": "0"
+    },
+    {
+      "type": "url-parameter",
+      "method": "GET",
+      "path": "/ReadNews.aspx",
+      "parameter": "NewsAd",
+      "example_url": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=2&NewsAd=ads/def.html",
+      "sample_value": "ads/def.html"
+    }
+  ],
+  "form_entrypoints": [
+    {
+      "type": "html-form",
+      "found_on": "http://testaspnet.vulnweb.com/",
+      "action": "http://testaspnet.vulnweb.com/default.aspx",
+      "method": "POST",
+      "in_scope": true,
+      "fields": [
+        {
+          "name": "__VIEWSTATE",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "__VIEWSTATEGENERATOR",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "__EVENTVALIDATION",
+          "tag": "input",
+          "type": "hidden"
+        }
+      ]
+    },
+    {
+      "type": "html-form",
+      "found_on": "http://testaspnet.vulnweb.com/Comments.aspx?id=1",
+      "action": "http://testaspnet.vulnweb.com/Comments.aspx?id=1",
+      "method": "POST",
+      "in_scope": true,
+      "fields": [
+        {
+          "name": "__VIEWSTATE",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "__VIEWSTATEGENERATOR",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "__EVENTVALIDATION",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "tbComment",
+          "tag": "textarea",
+          "type": "text"
+        },
+        {
+          "name": "btnSend",
+          "tag": "input",
+          "type": "submit"
+        }
+      ]
+    },
+    {
+      "type": "html-form",
+      "found_on": "http://testaspnet.vulnweb.com/about.aspx",
+      "action": "http://testaspnet.vulnweb.com/about.aspx",
+      "method": "POST",
+      "in_scope": true,
+      "fields": [
+        {
+          "name": "__VIEWSTATE",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "__VIEWSTATEGENERATOR",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "__EVENTVALIDATION",
+          "tag": "input",
+          "type": "hidden"
+        }
+      ]
+    },
+    {
+      "type": "html-form",
+      "found_on": "http://testaspnet.vulnweb.com/default.aspx",
+      "action": "http://testaspnet.vulnweb.com/default.aspx",
+      "method": "POST",
+      "in_scope": true,
+      "fields": [
+        {
+          "name": "__VIEWSTATE",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "__VIEWSTATEGENERATOR",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "__EVENTVALIDATION",
+          "tag": "input",
+          "type": "hidden"
+        }
+      ]
+    },
+    {
+      "type": "html-form",
+      "found_on": "http://testaspnet.vulnweb.com/login.aspx",
+      "action": "http://testaspnet.vulnweb.com/login.aspx",
+      "method": "POST",
+      "in_scope": true,
+      "fields": [
+        {
+          "name": "__VIEWSTATE",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "__VIEWSTATEGENERATOR",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "__EVENTVALIDATION",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "tbUsername",
+          "tag": "input",
+          "type": "text"
+        },
+        {
+          "name": "tbPassword",
+          "tag": "input",
+          "type": "password"
+        },
+        {
+          "name": "cbPersistCookie",
+          "tag": "input",
+          "type": "checkbox"
+        },
+        {
+          "name": "btnLogin",
+          "tag": "input",
+          "type": "submit"
+        }
+      ]
+    },
+    {
+      "type": "html-form",
+      "found_on": "http://testaspnet.vulnweb.com/Signup.aspx",
+      "action": "http://testaspnet.vulnweb.com/Signup.aspx",
+      "method": "POST",
+      "in_scope": true,
+      "fields": [
+        {
+          "name": "__VIEWSTATE",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "__VIEWSTATEGENERATOR",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "__EVENTVALIDATION",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "tbUsername",
+          "tag": "input",
+          "type": "text"
+        },
+        {
+          "name": "tbPassword",
+          "tag": "input",
+          "type": "password"
+        },
+        {
+          "name": "btnSignup",
+          "tag": "input",
+          "type": "submit"
+        }
+      ]
+    },
+    {
+      "type": "html-form",
+      "found_on": "http://testaspnet.vulnweb.com/Comments.aspx?id=0",
+      "action": "http://testaspnet.vulnweb.com/Comments.aspx?id=0",
+      "method": "POST",
+      "in_scope": true,
+      "fields": [
+        {
+          "name": "__VIEWSTATE",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "__VIEWSTATEGENERATOR",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "__EVENTVALIDATION",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "tbComment",
+          "tag": "textarea",
+          "type": "text"
+        },
+        {
+          "name": "btnSend",
+          "tag": "input",
+          "type": "submit"
+        }
+      ]
+    },
+    {
+      "type": "html-form",
+      "found_on": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=0&NewsAd=ads/def.html",
+      "action": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=0&NewsAd=ads%2fdef.html",
+      "method": "POST",
+      "in_scope": true,
+      "fields": [
+        {
+          "name": "__VIEWSTATE",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "__VIEWSTATEGENERATOR",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "__EVENTVALIDATION",
+          "tag": "input",
+          "type": "hidden"
+        }
+      ]
+    },
+    {
+      "type": "html-form",
+      "found_on": "http://testaspnet.vulnweb.com/Comments.aspx?id=3",
+      "action": "http://testaspnet.vulnweb.com/Comments.aspx?id=3",
+      "method": "POST",
+      "in_scope": true,
+      "fields": [
+        {
+          "name": "__VIEWSTATE",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "__VIEWSTATEGENERATOR",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "__EVENTVALIDATION",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "tbComment",
+          "tag": "textarea",
+          "type": "text"
+        },
+        {
+          "name": "btnSend",
+          "tag": "input",
+          "type": "submit"
+        }
+      ]
+    },
+    {
+      "type": "html-form",
+      "found_on": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=3&NewsAd=ads/def.html",
+      "action": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=3&NewsAd=ads%2fdef.html",
+      "method": "POST",
+      "in_scope": true,
+      "fields": [
+        {
+          "name": "__VIEWSTATE",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "__VIEWSTATEGENERATOR",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "__EVENTVALIDATION",
+          "tag": "input",
+          "type": "hidden"
+        }
+      ]
+    },
+    {
+      "type": "html-form",
+      "found_on": "http://testaspnet.vulnweb.com/Comments.aspx?id=2",
+      "action": "http://testaspnet.vulnweb.com/Comments.aspx?id=2",
+      "method": "POST",
+      "in_scope": true,
+      "fields": [
+        {
+          "name": "__VIEWSTATE",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "__VIEWSTATEGENERATOR",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "__EVENTVALIDATION",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "tbComment",
+          "tag": "textarea",
+          "type": "text"
+        },
+        {
+          "name": "btnSend",
+          "tag": "input",
+          "type": "submit"
+        }
+      ]
+    },
+    {
+      "type": "html-form",
+      "found_on": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=2&NewsAd=ads/def.html",
+      "action": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=2&NewsAd=ads%2fdef.html",
+      "method": "POST",
+      "in_scope": true,
+      "fields": [
+        {
+          "name": "__VIEWSTATE",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "__VIEWSTATEGENERATOR",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "__EVENTVALIDATION",
+          "tag": "input",
+          "type": "hidden"
+        }
+      ]
+    },
+    {
+      "type": "html-form",
+      "found_on": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=0",
+      "action": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=0",
+      "method": "POST",
+      "in_scope": true,
+      "fields": [
+        {
+          "name": "__VIEWSTATE",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "__VIEWSTATEGENERATOR",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "__EVENTVALIDATION",
+          "tag": "input",
+          "type": "hidden"
+        }
+      ]
+    },
+    {
+      "type": "html-form",
+      "found_on": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=3",
+      "action": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=3",
+      "method": "POST",
+      "in_scope": true,
+      "fields": [
+        {
+          "name": "__VIEWSTATE",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "__VIEWSTATEGENERATOR",
+          "tag": "input",
+          "type": "hidden"
+        },
+        {
+          "name": "__EVENTVALIDATION",
+          "tag": "input",
+          "type": "hidden"
+        }
+      ]
+    }
+  ]
+}

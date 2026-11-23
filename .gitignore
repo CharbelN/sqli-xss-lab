@@ -1,0 +1,20 @@
+# Bundled third-party tools (cloned locally, not part of this repo)
+.tools/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# sqlmap runtime output that is noisy / may contain host data
+evidence/sqlmap/output/
+.sqlmap/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp

@@ -1,0 +1,14 @@
+{
+  "generated_at": "2026-11-23T20:01:47.001932+00:00",
+  "target": "http://testaspnet.vulnweb.com/Comments.aspx?id=1",
+  "parameter": "id",
+  "canary": "<zzxss6cb5f65dzz>\"'",
+  "test_url": "http://testaspnet.vulnweb.com/Comments.aspx?id=%3Czzxss6cb5f65dzz%3E%22%27",
+  "status": 200,
+  "reflected_unencoded": false,
+  "reflected_encoded": false,
+  "quote_unencoded": false,
+  "verdict": "NOT-REFLECTED",
+  "confidence": "info",
+  "context_snippet": null
+}

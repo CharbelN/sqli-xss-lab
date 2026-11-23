@@ -1,0 +1,59 @@
+{
+  "engagement": "SQL Injection & XSS Lab — testaspnet.vulnweb.com",
+  "assessment_date": "2026-11-23",
+  "operator": "CharbelN",
+  "scope": ["testaspnet.vulnweb.com"],
+  "methods": ["manual", "llm-assisted", "guardrailed-agent", "owasp-zap", "sqlmap"],
+  "findings": [
+    {
+      "id": "SQLI-01",
+      "title": "SQL injection in Comments.aspx id parameter",
+      "severity": "Critical",
+      "cwe": "CWE-89",
+      "owasp": "A03:2021-Injection",
+      "entry_point": {"method": "GET", "url": "http://testaspnet.vulnweb.com/Comments.aspx?id=1", "parameter": "id"},
+      "status": "Confirmed",
+      "techniques": ["boolean-based blind", "stacked queries", "time-based blind"],
+      "sqlmap_requests": 202,
+      "sample_payloads": ["id=1 AND 1954=1954", "id=1;WAITFOR DELAY '0:0:5'--"],
+      "backend_dbms": "Microsoft SQL Server 2014",
+      "evidence": ["evidence/sqlmap/manual_probe_comments_id.json", "evidence/sqlmap/sqlmap_comments_id.log"],
+      "found_by": ["manual", "llm-assisted", "agent", "sqlmap"]
+    },
+    {
+      "id": "SQLI-02",
+      "title": "SQL injection in ReadNews.aspx id parameter",
+      "severity": "Critical",
+      "cwe": "CWE-89",
+      "owasp": "A03:2021-Injection",
+      "entry_point": {"method": "GET", "url": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=1", "parameter": "id"},
+      "status": "Confirmed",
+      "techniques": ["error/query-breaking (manual)"],
+      "evidence": ["evidence/sqlmap/manual_probe_readnews_id.json"],
+      "found_by": ["manual", "llm-assisted", "agent"]
+    },
+    {
+      "id": "XSS-01",
+      "title": "Stored XSS in Comments.aspx comment field (tbComment)",
+      "severity": "High",
+      "cwe": "CWE-79",
+      "owasp": "A03:2021-Injection",
+      "entry_point": {"method": "POST", "url": "http://testaspnet.vulnweb.com/Comments.aspx", "parameter": "tbComment"},
+      "status": "Confirmed",
+      "detail": "Comment stored and rendered without output-encoding; <script> and <img onerror> stored verbatim.",
+      "evidence": ["evidence/xss/stored_probe.json", "evidence/xss/poc_render.html"],
+      "found_by": ["manual", "llm-assisted", "agent"]
+    },
+    {
+      "id": "INFO-01",
+      "title": "Reflected XSS via query string (mitigated)",
+      "severity": "Info",
+      "cwe": "CWE-79",
+      "status": "Mitigated",
+      "detail": "ASP.NET Request Validation blocks '<' in query string; value returned HTML-encoded.",
+      "entry_point": {"method": "GET", "url": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=1", "parameter": "id"},
+      "evidence": ["evidence/xss/probe_readnews_id.json"],
+      "found_by": ["manual", "llm-assisted", "agent"]
+    }
+  ]
+}

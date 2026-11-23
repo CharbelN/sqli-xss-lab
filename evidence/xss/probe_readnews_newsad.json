@@ -1,0 +1,14 @@
+{
+  "generated_at": "2026-11-23T20:01:49.579559+00:00",
+  "target": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=1&NewsAd=ads/def.html",
+  "parameter": "NewsAd",
+  "canary": "<zzxss6a9deeb3zz>\"'",
+  "test_url": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=1&NewsAd=%3Czzxss6a9deeb3zz%3E%22%27",
+  "status": 500,
+  "reflected_unencoded": false,
+  "reflected_encoded": true,
+  "quote_unencoded": false,
+  "verdict": "REFLECTED-ENCODED (output encoded; not exploitable via this vector)",
+  "confidence": "info",
+  "context_snippet": "String value was detected from the client (NewsAd=&quot;&lt;zzxss6a9deeb3zz&gt;&quot;'&quot;).</title>\r\n        <style>\r"
+}

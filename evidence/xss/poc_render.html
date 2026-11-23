@@ -1,0 +1,13 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Stored XSS PoC render</title>
+<style>body{font-family:sans-serif;margin:24px;color:#222}.note{background:#f4f4f4;border-left:4px solid #c0392b;padding:10px;margin:14px 0;font-size:14px}</style></head>
+<body>
+<h2>Stored XSS &mdash; Proof of Concept render</h2>
+<div class="note">The block below is the <b>exact, unmodified HTML the server returned</b> for a comment
+submitted to <code>http://testaspnet.vulnweb.com/Comments.aspx?id=1</code> (field <code>tbComment</code>).
+Because the application stores and emits the comment <b>without output-encoding</b>, the browser parses the
+injected markup as real HTML. A <code>&lt;script&gt;</code> payload in the same place executes identically.</div>
+<p><b>Rendered by the browser (as every visitor would see it):</b></p>
+<div style="border:1px solid #ccc;padding:12px"><h1 style="color:#ffffff;background:#c0392b;padding:14px;font-family:sans-serif">STORED XSS EXECUTES HERE &mdash; CharbelN lab PoC</h1></div>
+<p style="margin-top:20px"><b>The literal bytes the server sent (source):</b></p>
+<pre style="background:#272822;color:#f8f8f2;padding:12px;overflow:auto">&lt;DIV class=&quot;CommentText&quot;&gt;&lt;h1 style=&quot;color:#ffffff;background:#c0392b;padding:14px;font-family:sans-serif&quot;&gt;STORED XSS EXECUTES HERE &amp;mdash; CharbelN lab PoC&lt;/h1&gt;&lt;/DIV&gt;</pre>
+</body></html>

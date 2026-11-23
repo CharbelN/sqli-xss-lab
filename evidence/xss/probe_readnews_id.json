@@ -1,0 +1,14 @@
+{
+  "generated_at": "2026-11-23T20:01:44.912638+00:00",
+  "target": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=1",
+  "parameter": "id",
+  "canary": "<zzxssed1f2d4dzz>\"'",
+  "test_url": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=%3Czzxssed1f2d4dzz%3E%22%27",
+  "status": 500,
+  "reflected_unencoded": false,
+  "reflected_encoded": true,
+  "quote_unencoded": false,
+  "verdict": "REFLECTED-ENCODED (output encoded; not exploitable via this vector)",
+  "confidence": "info",
+  "context_snippet": "ueryString value was detected from the client (id=&quot;&lt;zzxssed1f2d4dzz&gt;&quot;'&quot;).</title>\r\n        <style>\r"
+}
