@@ -37,6 +37,8 @@ Findings are classified with standard identifiers:
 3. **XSS.** Probe URL parameters for unencoded reflection
    (`scripts/xss_manual_probe.py`) and the comment form for stored XSS
    (`scripts/xss_stored_probe.py`), using harmless canaries.
+4. **OWASP ZAP.** Run a scoped headless scan (spider → AJAX spider → passive → active,
+   SQLi/XSS rule policy) for breadth. See [`08-owasp-zap.md`](08-owasp-zap.md).
 
 ## Phase 2 — LLM-assisted
 

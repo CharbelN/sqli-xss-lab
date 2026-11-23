@@ -45,12 +45,46 @@
       "found_by": ["manual", "llm-assisted", "agent"]
     },
     {
+      "id": "SQLI-03",
+      "title": "SQL injection in login.aspx tbUsername (authentication bypass)",
+      "severity": "Critical",
+      "cwe": "CWE-89",
+      "owasp": "A03:2021-Injection",
+      "entry_point": {"method": "POST", "url": "http://testaspnet.vulnweb.com/login.aspx", "parameter": "tbUsername"},
+      "status": "Confirmed",
+      "detail": "ZAP flagged `ZAP' OR '1'='1' --`. Kept to detection-only during manual/LLM/agent work per scope.",
+      "evidence": ["evidence/zap/zap-report.html", "evidence/zap/zap-report.json"],
+      "found_by": ["zap"]
+    },
+    {
+      "id": "XSS-02",
+      "title": "Reflected XSS via javascript: URI in ReadNews.aspx NewsAd",
+      "severity": "High",
+      "cwe": "CWE-79",
+      "owasp": "A03:2021-Injection",
+      "entry_point": {"method": "GET", "url": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=0&NewsAd=javascript:alert(1);", "parameter": "NewsAd"},
+      "status": "Confirmed",
+      "detail": "NewsAd reflected into a link; javascript: URI executes. Bypasses ASP.NET Request Validation (no '<'), which is why the <-tag-based manual/LLM/agent probes missed it.",
+      "evidence": ["evidence/zap/zap-report.html", "evidence/zap/zap-report.json"],
+      "found_by": ["zap"]
+    },
+    {
+      "id": "MISC",
+      "title": "Missing security headers and hardening gaps",
+      "severity": "Low-Medium",
+      "cwe": ["CWE-352", "CWE-693", "CWE-1021", "CWE-497", "CWE-933", "CWE-1275"],
+      "status": "Confirmed",
+      "detail": "No CSP, no anti-CSRF tokens, no anti-clickjacking header, cookies without SameSite, Server/X-Powered-By/X-AspNet-Version info leaks.",
+      "evidence": ["evidence/zap/zap-report.html"],
+      "found_by": ["zap"]
+    },
+    {
       "id": "INFO-01",
-      "title": "Reflected XSS via query string (mitigated)",
+      "title": "Reflected XSS via <-tag in query string (mitigated for this vector)",
       "severity": "Info",
       "cwe": "CWE-79",
       "status": "Mitigated",
-      "detail": "ASP.NET Request Validation blocks '<' in query string; value returned HTML-encoded.",
+      "detail": "ASP.NET Request Validation blocks '<' in the query string; value returned HTML-encoded. Does NOT cover the javascript: URI vector (XSS-02) or the stored POST vector (XSS-01).",
       "entry_point": {"method": "GET", "url": "http://testaspnet.vulnweb.com/ReadNews.aspx?id=1", "parameter": "id"},
       "evidence": ["evidence/xss/probe_readnews_id.json"],
       "found_by": ["manual", "llm-assisted", "agent"]

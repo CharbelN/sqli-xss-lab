@@ -7,8 +7,11 @@
 |----|-------|----------|-----|--------|
 | **SQLI-01** | SQL injection in `Comments.aspx` `id` parameter | Critical | CWE-89 | Confirmed |
 | **SQLI-02** | SQL injection in `ReadNews.aspx` `id` parameter | Critical | CWE-89 | Confirmed |
+| **SQLI-03** | SQL injection in `login.aspx` `tbUsername` (auth bypass) | Critical | CWE-89 | Confirmed (ZAP) |
 | **XSS-01** | Stored XSS in `Comments.aspx` comment field (`tbComment`) | High | CWE-79 | Confirmed |
-| **INFO-01** | Reflected XSS via query string | Info | CWE-79 | Mitigated (ASP.NET Request Validation) |
+| **XSS-02** | Reflected XSS via `javascript:` URI in `ReadNews.aspx?NewsAd` | High | CWE-79 | Confirmed (ZAP) |
+| **MISC** | Missing CSP / anti-CSRF / anti-clickjacking headers, info leaks | Low–Med | 352/693/1021/497 | Confirmed (ZAP) |
+| **INFO-01** | Reflected XSS via `<`-tag in query string | Info | CWE-79 | Mitigated for this vector (ASP.NET Request Validation) |
 
 ---
 
@@ -34,6 +37,27 @@
   (`evidence/sqlmap/manual_probe_readnews_id.json`). Same backend query pattern.
 - **Remediation:** as SQLI-01.
 
+## SQLI-03 — SQL injection in `login.aspx` `tbUsername` (Critical, CWE-89)
+
+- **Entry point:** `POST http://testaspnet.vulnweb.com/login.aspx`, field `tbUsername`.
+- **Evidence (OWASP ZAP):** payload `ZAP' OR '1'='1' --` flagged as SQL Injection — a
+  classic authentication-bypass pattern. `evidence/zap/zap-report.html`.
+- **Note:** flagged as a candidate during manual/LLM/agent work but kept to
+  *detection-only* per scope (no account takeover attempted). ZAP actively confirmed it.
+- **Remediation:** parameterised auth query + account lockout; never build the login
+  `WHERE` clause from string concatenation.
+
+## XSS-02 — Reflected XSS via `javascript:` URI in `ReadNews.aspx?NewsAd` (High, CWE-79)
+
+- **Entry point:** `GET http://testaspnet.vulnweb.com/ReadNews.aspx?id=0&NewsAd=javascript:alert(1);`, parameter `NewsAd`.
+- **Evidence (OWASP ZAP):** `NewsAd` is reflected into a link target; a `javascript:`
+  URI executes. `evidence/zap/zap-report.html`.
+- **Why manual/LLM missed it:** our probes used `<`-tag canaries, which ASP.NET Request
+  Validation blocks. A `javascript:` URI has no `<`, so it slips past that filter. This
+  is the key cross-method lesson — see `../docs/08-owasp-zap.md` §8.3.
+- **Remediation:** validate/whitelist `NewsAd` against known-good paths; reject
+  `javascript:`/`data:` URI schemes; output-encode for the attribute context.
+
 ## XSS-01 — Stored XSS in `Comments.aspx` comment field (High, CWE-79)
 
 - **Entry point:** `POST http://testaspnet.vulnweb.com/Comments.aspx`, field `tbComment`.
@@ -47,14 +71,16 @@
 - **Remediation:** contextual HTML output-encoding (`HttpUtility.HtmlEncode`) + CSP +
   `HttpOnly` cookies. See [`../docs/07-remediation.md`](../docs/07-remediation.md).
 
-## INFO-01 — Reflected XSS via query string (Info — mitigated)
+## INFO-01 — Reflected XSS via `<`-tag in query string (Info — mitigated *for this vector*)
 
-- Injecting `<` into `ReadNews.aspx?id` / `?NewsAd` triggers ASP.NET **Request
-  Validation** ("A potentially dangerous Request.QueryString value was detected"),
-  and the value is returned HTML-encoded. Not exploitable via this vector.
-  `evidence/xss/probe_readnews_id.json`.
-- **Note:** Request Validation is a backstop; it does **not** cover the stored POST
-  vector (XSS-01). Output-encoding is still required.
+- Injecting a `<`-based tag into `ReadNews.aspx?id` / `?NewsAd` triggers ASP.NET
+  **Request Validation** ("A potentially dangerous Request.QueryString value was
+  detected"), and the value is returned HTML-encoded. Not exploitable **via a `<`-tag
+  payload**. `evidence/xss/probe_readnews_id.json`.
+- **Important caveat:** Request Validation only blocks markup-like input. It does **not**
+  stop the `javascript:`-URI reflected XSS on `NewsAd` (**XSS-02**) or the stored POST
+  vector (**XSS-01**). It is a backstop, not a substitute for output-encoding and input
+  whitelisting.
 
 ---
 
@@ -62,9 +88,16 @@
 
 | Finding | Manual | LLM | Agent | ZAP |
 |---------|:------:|:---:|:-----:|:---:|
-| SQLI-01 | ✅ | ✅ | ✅ | see `evidence/zap/` |
-| SQLI-02 | ✅ | ✅ | ✅ | see `evidence/zap/` |
-| XSS-01  | ✅ | ✅ | ✅ | see `evidence/zap/` |
-| INFO-01 | ✅ | ✅ | ✅ | see `evidence/zap/` |
+| SQLI-01 (`Comments.aspx?id`) | ✅ | ✅ | ✅ | ✅ |
+| SQLI-02 (`ReadNews.aspx?id`) | ✅ | ✅ | ✅ | ✅ |
+| SQLI-03 (`login.aspx` auth) | candidate only | candidate only | candidate only | ✅ **only ZAP confirmed** |
+| XSS-01 (stored `tbComment`) | ✅ | ✅ | ✅ | ✅ |
+| XSS-02 (`javascript:` URI `NewsAd`) | ❌ missed | ❌ missed | ❌ missed | ✅ **only ZAP found** |
+| INFO-01 (`<`-tag query XSS blocked) | ✅ | ✅ | ✅ | ✅ |
+
+Two findings (SQLI-03, XSS-02) were discovered **only by ZAP** — the clearest evidence
+of why an automated scanner complements manual/LLM/agent testing. See
+[`../docs/08-owasp-zap.md`](../docs/08-owasp-zap.md) and
+[`../docs/06-comparison.md`](../docs/06-comparison.md).
 
 Full comparison and discussion: [`../docs/06-comparison.md`](../docs/06-comparison.md).

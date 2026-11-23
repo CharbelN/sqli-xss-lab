@@ -1,0 +1,103 @@
+﻿[zap] checking Docker daemon...
+[zap] pulling image ghcr.io/zaproxy/zaproxy:stable (first run only, ~1-2 min)...
+stable: Pulling from zaproxy/zaproxy
+Digest: sha256:9624669db72f54d86c4b46a7064518bd9bf79d8c61a4c31befa9923489f328af
+Status: Image is up to date for ghcr.io/zaproxy/zaproxy:stable
+ghcr.io/zaproxy/zaproxy:stable
+[zap] running Automation Framework plan (scoped to testaspnet.vulnweb.com)...
+Found Java version 17.0.21
+Available memory: 11901 MB
+Using JVM args: -Xmx2975m
+1780 [main] INFO  org.parosproxy.paros.Constant - Copying default configuration to /home/zap/.ZAP/config.xml
+2222 [main] INFO  org.parosproxy.paros.Constant - Creating directory /home/zap/.ZAP/session
+2225 [main] INFO  org.parosproxy.paros.Constant - Creating directory /home/zap/.ZAP/dirbuster
+2237 [main] INFO  org.parosproxy.paros.Constant - Creating directory /home/zap/.ZAP/fuzzers
+2239 [main] INFO  org.parosproxy.paros.Constant - Creating directory /home/zap/.ZAP/plugin
+powershell : Nov 23, 2026 8:03:15 PM java.util.prefs.FileSystemPreferences$1 run
+At line:1 char:352
++ ... i-xss-lab"; powershell -ExecutionPolicy Bypass -File scripts\run_zap. ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Nov 23, 2026 8:...eferences$1 run:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+INFO: Created user preferences directory.
+Job spider set context = vulnweb-lab
+Job spider set url = http://testaspnet.vulnweb.com/
+Job spider set maxDuration = 3
+Job spider set maxDepth = 5
+Job spider/stats/null set name = at-least-some-urls-found
+Job spider/stats/null set type = stats
+Job spider/stats/null set statistic = automation.spider.urls.added
+Job spider/stats/null set operator = >=
+Job spider/stats/null set value = 5
+Job spider/stats/null set onFail = Warn
+Job spider adding test of type stats : at-least-some-urls-found
+Job spiderAjax set context = vulnweb-lab
+Job spiderAjax set url = http://testaspnet.vulnweb.com/
+Job spiderAjax set maxDuration = 2
+Job spiderAjax set browserId = firefox-headless
+Job passiveScan-wait set maxDuration = 3
+Job activeScan set context = vulnweb-lab
+Job activeScan set maxRuleDurationInMins = 3
+Job activeScan set maxScanDurationInMins = 10
+Job activeScan set defaultStrength = medium
+Job activeScan set defaultThreshold = off
+Job report-html set template = traditional-html
+Job report-html set reportDir = /zap/out
+Job report-html set reportFile = zap-report
+Job report-html set reportTitle = ZAP Scan — testaspnet.vulnweb.com (SQLi/XSS lab)
+Job report-json set template = traditional-json
+Job report-json set reportDir = /zap/out
+Job report-json set reportFile = zap-report
+Job spider started
+Job spider requesting URL http://testaspnet.vulnweb.com
+Job spider found 63 URLs
+Job spider test of type stats passed: at-least-some-urls-found [63 >= 5]
+Job spider finished, time taken: 00:00:07
+Job spiderAjax started
+Job spiderAjax terminated
+Job spiderAjax found 71 URLs
+Job spiderAjax finished, time taken: 00:02:05
+Job passiveScan-wait started
+Job passiveScan-wait finished, time taken: 00:00:20
+Job activeScan started
+Job activeScan set default strength to MEDIUM
+Job activeScan set default threshold to OFF
+Job activeScan set rule 40018 strength to MEDIUM
+Job activeScan set rule 40018 threshold to LOW
+Job activeScan set rule 40019 strength to MEDIUM
+Job activeScan set rule 40019 threshold to LOW
+Job activeScan set rule 40020 strength to MEDIUM
+Job activeScan set rule 40020 threshold to LOW
+Job activeScan set rule 40021 strength to MEDIUM
+Job activeScan set rule 40021 threshold to LOW
+Job activeScan set rule 40022 strength to MEDIUM
+Job activeScan set rule 40022 threshold to LOW
+Job activeScan set rule 40027 strength to MEDIUM
+Job activeScan set rule 40027 threshold to LOW
+Job activeScan set rule 40012 strength to MEDIUM
+Job activeScan set rule 40012 threshold to LOW
+Job activeScan set rule 40014 strength to MEDIUM
+Job activeScan set rule 40014 threshold to LOW
+Job activeScan set rule 40016 strength to MEDIUM
+Job activeScan set rule 40016 threshold to LOW
+Job activeScan set rule 40017 strength to MEDIUM
+Job activeScan set rule 40017 threshold to LOW
+Job activeScan finished, time taken: 00:04:22
+Job report started
+Job report-html generated report /zap/out/zap-report.html
+Job report finished, time taken: 00:00:01
+Job report started
+Job report-json generated report /zap/out/zap-report.json
+Job report finished, time taken: 00:00:00
+Automation plan succeeded!
+[zap] exit code: 0
+[zap] reports written to: C:\Users\Admin\Desktop\cyberia\sqli-xss-lab\evidence\zap
+
+Name                Length
+----                ------
+zap-report.html     240314
+zap-report.json     130840
+zap_run_console.log   4279
+
+
